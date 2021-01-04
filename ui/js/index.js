@@ -35,8 +35,8 @@ ws.onmessage = function({data}) {
 
         switch(type) {
             case 'ping':
-                // console.log('ping');
-                return;
+                console.log('ping');
+                break;
             default:
                 msgEl.innerHTML = payload;
                 webSocketOutput.prepend(msgEl);
