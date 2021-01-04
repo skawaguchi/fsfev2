@@ -27,7 +27,7 @@ function sendQuery(query) {
 }
 
 ws.onmessage = function({data}) {
-    const msg = document.createElement('div');
+    const msgEl = document.createElement('div');
 
     try {
         data = JSON.parse(data);
@@ -38,8 +38,9 @@ ws.onmessage = function({data}) {
                 // console.log('ping');
                 return;
             default:
-                msg.innerHTML = payload;
-                webSocketOutput.prepend(msg);
+                msgEl.innerHTML = payload;
+                webSocketOutput.prepend(msgEl);
+                break;
         }
     } catch(e) {
         console.log('Websocket error', e);

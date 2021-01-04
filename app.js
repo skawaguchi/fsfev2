@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const randomWords = require('random-words');
+
 const app = express();
 
 const WebSocketServer = require('ws').Server;
@@ -7,20 +9,16 @@ const server = require('http').createServer(app);
 const wss = new WebSocketServer({ server });
 const port = 3000;
 
-// Serve js files
 app.use('/js', express.static(path.join(__dirname, 'ui/js/')));
-// Serve css files
 app.use('/css', express.static(path.join(__dirname, 'ui/css/')));
-
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/ui/html/index.html'));
 });
 
-
-
 function handleQuery(query, cb) {
-    cb('Awesome');
+    const totallyRandomResponse = randomWords();
+    cb(totallyRandomResponse);
 }
 
 /**
@@ -62,11 +60,12 @@ wss.on('connection', function connection(ws) {
       clearInterval(pingInterval);
     }
     console.log('disconnected');
+    console.log('client connections: ', cc);
   });
 
-  ws.on('error', function error() {
+  ws.on('error', function error(err) {
     --cc;
-    console.log('error');
+    console.error(err);
   });
 
 });
@@ -75,7 +74,7 @@ const pingPayload = JSON.stringify({type: 'ping'});
 // Keep the connection alive
 let pingInterval = setInterval(() => {
   wss.broadcast(pingPayload);
-}, 1 * 5000);
+}, 5 * 1000);
 
 /**
  * Broadcast data to all connected clients
