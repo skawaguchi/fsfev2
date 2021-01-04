@@ -13,9 +13,9 @@ let ws;
 try {
   // Local dev
   if (['localhost', '127.0.0.1', ''].includes(location.hostname)) {
-    ws = new WebSocket(`ws://localhost:3000`);
+    ws = new WebSocket(`ws://localhost:3001`);
   } else {
-    ws = new WebSocket(`wss://jemisthe.best`);
+    ws = new WebSocket(`wss://steviekool.xyz`);
   }
 } catch(e) {
   console.log('Web socket init error', e);
